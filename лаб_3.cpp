@@ -162,11 +162,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             LONG width = rect.right - rect.left;
             LONG height = rect.bottom - rect.top;
             int iteration = 0;
+            std::complex <double> Z(0, 0);
                 for (int i = 0; i < scr_y; i++)
                 {
                     for (int j = 0; j < scr_x; j++)
                     {
-                        std::complex<double>Z(0, 0);
                         cR = cre_start + step_x * j;
                         cI = cim_start + step_y * i;
                        // c1 = cre_start + step_x * i;
@@ -177,20 +177,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         iteration = 0;
                         while (iteration < n) {
                             //z - комплексное число
-                            ////zrREAL,ZIMG,CrEAL,cIMG;
-                            //double temp = zR * zR - zI * zI + cR;
-                            //zI = 
-                            //z = z * z * z + z * z + c;
-                            Z = std::pow(Z, 3) + std::pow(Z, 2) + c;
+                            //zrREAL,ZIMG,CrEAL,cIMG;
+                            Z = pow(Z, 3) + pow(Z, 2) + c;
+                            /*double temp = zR * zR - zI * zI + cR;
+                            zI = 
+                            z = z * z * z + z * z + c;*/
                             //std::complex<double> squareZ = std::pow();
                             if (std::abs(Z)>2)
                             {
-                                SetPixel(hdc, i,j, RGB(iteration, iteration*5, iteration * 10));
-                                break;
+                                SetPixel(hdc, i,j, RGB((int)(iteration *cosf(iteration)) % 256, (iteration*iteration) % 256, iteration % 256));
                             }
                             iteration++;
                         }
-                        if (iteration >= 256) {
+                        if (iteration > 256) {
                             SetPixel(hdc, i, j, RGB(0,0,0));
                         }
                     }
